@@ -13,7 +13,7 @@
     <br>
     @endif
 
-    <form method="POST" action="{{ route('businesses.store') }}">
+    <form enctype="multipart/form-data" method="POST" action="{{ route('businesses.store') }}">
         @csrf
         <input type="text" name="name" placeholder="nome" value="{{old('name')}}"/>
         @error('name')
@@ -27,15 +27,22 @@
         <br>
         <input type="text" name="address" placeholder="address" value="{{old('address')}}"/>
         <br>
+        <input type="file" name="logo" />
+        <br>
         <button type="submit">Enviar</button>
     </form>
 
     <hr>
     @foreach($businesses as $business)
+    @if($business->logo)
+    <img src="{{Storage::disk('public')->url($business->logo)}}" alt="{{$business->name}}" width="150">
+    @endif
         <p>{{$business->name}}</p>
         <p>{{$business->email}}</p>
         <p>{{$business->address}}</p>
         <hr>
     @endforeach
+
+        {{$businesses->onEachSide(2)->links()}}
 
 @endsection

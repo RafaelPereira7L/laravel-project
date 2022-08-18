@@ -54,7 +54,8 @@ class BusinessController extends Controller
             Update -> find()->update()
             Delete -> delete()
         */
-        $businesses = Business::all();
+        // $businesses = Business::all();
+        $businesses = Business::paginate();
         return view('businesses', compact('businesses'));
 
     }
@@ -64,7 +65,12 @@ class BusinessController extends Controller
             'name' => 'required|string|min:3',
             'email' => 'required|email',
             'address' => 'string|min:3',
+            'logo' => 'file',
         ]);
+
+        $file = $input['logo'];
+        $path = $file->store('logos', 'public');
+        $input['logo'] = $path;
 
         Business::create($input);
         return redirect()->route('businesses.index');
