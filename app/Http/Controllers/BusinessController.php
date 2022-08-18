@@ -43,15 +43,30 @@ class BusinessController extends Controller
 
         // dd($business);
 
+
+        // $business = Business::find(5);
+        // $business->delete();
+        // dd($business->toArray());
+
         /*  CRUD
             Create -> create()
             Read -> get() ou find()
             Update -> find()->update()
             Delete -> delete()
         */
+        $businesses = Business::all();
+        return view('businesses', compact('businesses'));
 
-        $business = Business::find(5);
-        // $business->delete();
-        dd($business->toArray());
+    }
+
+    public function store(Request $request) {
+        $input = $request->validate([
+            'name' => 'required|string|min:3',
+            'email' => 'required|email',
+            'address' => 'string|min:3',
+        ]);
+
+        Business::create($input);
+        return redirect()->route('businesses.index');
     }
 }

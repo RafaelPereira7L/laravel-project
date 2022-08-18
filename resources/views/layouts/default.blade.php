@@ -8,7 +8,6 @@
     <link rel="stylesheet" href="{{asset('css/app.css')}}"/>
 </head>
 <body>
-    <h1>My Layout</h1>
     @section('sidebar')
         <div>
             <nav>Sidebar</nav>
